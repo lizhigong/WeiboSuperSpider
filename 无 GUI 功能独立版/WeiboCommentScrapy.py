@@ -27,9 +27,12 @@ import re
 from time import sleep
 from random import randint
 
+
+my_cookie = '_T_WM=dfa6f087073666ebd21bb852a39cfcce; SCF=AhN6sTHqSyKYRLsrmPjlzzwTIAm8CZaYE2U-3CzPTVQQTiZJE63-mDQC8IXtehDn8vPiMvixyw9QSUD176dpZCY.; SUB=_2A25NGS69DeRhGeFK41EZ-SjIyzSIHXVu5bL1rDV6PUJbktANLWHSkW1NQvHi32oZjJ5U-q4DPLpdPi56eJ824MxY; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhZoiRi.4PwaoZQAicp86k.5NHD95QNShn01h.cSh5RWs4DqcjHi--fi-2Xi-8Wxs8ai--Xi-i8i-27; SSOLoginState=1612537582'
+
 headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
-    'Cookie': '''换成你自己的 cookie'''
+    'Cookie': my_cookie
 }
 
 class WeiboCommentScrapy(Thread):
@@ -163,5 +166,5 @@ class WeiboCommentScrapy(Thread):
             sleep(randint(1,5))
 
 if __name__ =="__main__":
-    WeiboCommentScrapy(wid='IaYZIu0Ko')
+    WeiboCommentScrapy(wid='K0xXIrPtf')
 

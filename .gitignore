@@ -24,6 +24,13 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.idea
+
+# output file
+*.csv
+*.xlsx
+*.7z
+*.zip
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -102,3 +109,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
