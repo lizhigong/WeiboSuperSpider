@@ -86,14 +86,22 @@ ctx = execjs.compile(jspython)  # 编译 js
 
 agent = 'mozilla/5.0 (windowS NT 10.0; win64; x64) appLewEbkit/537.36 (KHTML, likE gecko) chrome/71.0.3578.98 safari/537.36'
 # Cookie needs to be set manually
-my_cookie = '_T_WM=dfa6f087073666ebd21bb852a39cfcce; SCF=AhN6sTHqSyKYRLsrmPjlzzwTIAm8CZaYE2U-3CzPTVQQTiZJE63-mDQC8IXtehDn8vPiMvixyw9QSUD176dpZCY.; SUB=_2A25NGS69DeRhGeFK41EZ-SjIyzSIHXVu5bL1rDV6PUJbktANLWHSkW1NQvHi32oZjJ5U-q4DPLpdPi56eJ824MxY; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhZoiRi.4PwaoZQAicp86k.5NHD95QNShn01h.cSh5RWs4DqcjHi--fi-2Xi-8Wxs8ai--Xi-i8i-27; SSOLoginState=1612537582'
+
+with open ("cookie.txt", "r") as f:
+    my_cookie = f.readline()
 
 headers = {
     'user-agent': agent,
     'Cookie': my_cookie
 }
 
-comment_path = 'comment2'
+# I have proxies on my machine, somehow python detects it and uses this proxy, which causes SSL error.
+proxies_dic = {
+    'http': None,
+    'https': None
+}
+
+comment_path = 'comment'
 if not os.path.exists(comment_path):
     os.mkdir(comment_path)
 
@@ -110,7 +118,7 @@ def start_crawl(weibo_id):
     max_id = 0
     max_id_type = 0
     comment_ids = []
-    res = requests.get(url=base_url.format(weibo_id, weibo_id), headers=headers)
+    res = requests.get(url=base_url.format(weibo_id, weibo_id), headers=headers, proxies=proxies_dic)
 
     while True:
         print('parse page {}'.format(page))
@@ -152,7 +160,8 @@ def start_crawl(weibo_id):
             return
 
         time.sleep(4)
-        res = requests.get(url=next_url.format(weibo_id, weibo_id, max_id, max_id_type), headers=headers)
+        res = requests.get(url=next_url.format(weibo_id, weibo_id, max_id, max_id_type), headers=headers,
+                           proxies=proxies_dic)
 
 
 def crawl_nested_commends(cid):
@@ -166,7 +175,7 @@ def crawl_nested_commends(cid):
     total_comments = 0
     base_url = 'https://m.weibo.cn/comments/hotFlowChild?cid={}&max_id={}&max_id_type={}'
     comment_ids = []
-    res = requests.get(url=base_url.format(cid, max_id, max_id_type), headers=headers)
+    res = requests.get(url=base_url.format(cid, max_id, max_id_type), headers=headers, proxies=proxies_dic)
 
     while True:
         print('parse page {} of {}'.format(page, cid))
@@ -202,7 +211,7 @@ def crawl_nested_commends(cid):
             break
 
         time.sleep(4)
-        res = requests.get(url=base_url.format(cid, max_id, max_id_type), headers=headers)
+        res = requests.get(url=base_url.format(cid, max_id, max_id_type), headers=headers, proxies=proxies_dic)
         print("next request: {} {}".format(res.url, res.status_code))
 
     return total_comments

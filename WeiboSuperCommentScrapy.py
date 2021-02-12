@@ -99,11 +99,6 @@ function mid2id(mid) {
 }'''
 ctx = execjs.compile(jspython)  # 编译 js
 
-
-# mid = 'Is0XboARR'
-# id = ctx.call('mid2id', mid)
-# print(id)
-
 def get_cookies():
     # 加载cookie
     cookies = cookielib.LWPCookieJar("Cookie.txt")
@@ -194,11 +189,11 @@ def start_crawl(cookie_dict, id):
             print(id_type)
         print(res.status_code)
 
+    # TODO: Move file to another place
+
 
 if __name__ == '__main__':
     global mid
-    # username = "18918829347"  # 用户名，一般是手机号码
-    # password = "c0eed6c2b9ab"  # 密码
     # cookie_path = "Cookie.txt"  # 保存cookie 的文件名称
     # id = '4467107636950632'     # 爬取微博的 id
     mid = 'K0DTupjf9'
